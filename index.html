@@ -738,7 +738,7 @@
           <h3>線上諮詢表單</h3>
           <p>填寫您的需求，我們會在 24 小時內與您聯繫。</p>
           
-          <form onsubmit="event.preventDefault(); alert('感謝您的諮詢！這是一個前端展示表單，後續將為您串接後端寄信系統。');">
+          <form id="contactForm">
             <div class="form-group">
               <label for="name">您的姓名 (必填)</label>
               <input type="text" id="name" class="form-control" placeholder="請輸入姓名" required>
@@ -812,6 +812,40 @@
         } else {
           navbar.style.boxShadow = 'var(--shadow-sm)';
         }
+      });
+
+      // --- 表單提交邏輯 ---
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbyTq-1qMHHH5nVSUkodOmv7Nl_v51DH50LtdcK_6k3JM0H3V8_cQNd6NdquhXuZHwXa9g/exec';
+      const form = document.querySelector('#contactForm');
+      const submitBtn = form.querySelector('.submit-btn');
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        // 防止重複送出
+        submitBtn.disabled = true;
+        submitBtn.innerText = '送出中...';
+
+        // 整理資料 (對應 GAS 腳本中的參數名)
+        const formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('phone', document.getElementById('phone').value);
+        formData.append('serviceType', document.getElementById('serviceType').value);
+        formData.append('message', document.getElementById('message').value);
+
+        fetch(scriptURL, { method: 'POST', body: formData })
+          .then(response => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = '送出諮詢';
+            alert('感謝您的詢問！我們已收到您的資訊，將儘速與您聯繫。');
+            form.reset();
+          })
+          .catch(error => {
+            submitBtn.disabled = false;
+            submitBtn.innerText = '再次送出';
+            console.error('Error!', error.message);
+            alert('傳送發生錯誤，請稍後再試，或直接撥打電話聯繫，謝謝！');
+          });
       });
     });
   </script>
