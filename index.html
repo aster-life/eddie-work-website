@@ -544,6 +544,247 @@
       .contact-info-panel, .contact-form-panel { padding: 40px 20px; }
       .section { padding: 60px 5%; }
     }
+
+    /* ── 施工案例 (Portfolio) ── */
+    .portfolio-section {
+      background: var(--bg-light);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .portfolio-item {
+      background: var(--bg-white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+    }
+
+    .portfolio-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    }
+
+    /* Before/After 比較器 */
+    .compare-wrapper {
+      position: relative;
+      user-select: none;
+    }
+
+    .compare-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      cursor: col-resize;
+    }
+
+    .compare-container .img-before {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0; left: 0;
+    }
+
+    .compare-container .img-after-wrap {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 50%;
+      overflow: hidden;
+      transition: none;
+    }
+
+    .compare-container .img-after-wrap img {
+      display: block;
+      width: 100vw;
+      max-width: 800px;
+      height: 100%;
+      object-fit: cover;
+      object-position: left center;
+    }
+
+    .compare-divider {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 3px;
+      height: 100%;
+      background: #fff;
+      transform: translateX(-50%);
+      box-shadow: 0 0 8px rgba(0,0,0,0.4);
+      transition: none;
+      z-index: 10;
+    }
+
+    .compare-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--primary);
+      cursor: col-resize;
+      transition: transform 0.2s ease;
+    }
+
+    .compare-handle:hover {
+      transform: translate(-50%, -50%) scale(1.15);
+    }
+
+    .compare-labels {
+      position: absolute;
+      bottom: 12px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      z-index: 20;
+      padding: 0 14px;
+    }
+
+    .compare-labels span {
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+    }
+
+    .portfolio-info {
+      padding: 20px 24px;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .portfolio-info h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .portfolio-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* 北區透天翻修 輪播 */
+    .gallery-block {
+      background: var(--bg-white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .gallery-block-header {
+      padding: 24px 30px 16px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .gallery-block-header h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .gallery-block-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .carousel-track-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-track img {
+      min-width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--bg-white);
+    }
+
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--surface-border);
+      background: var(--bg-white);
+      color: var(--primary);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .carousel-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--surface-border);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .carousel-dot.active {
+      background: var(--primary);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .compare-container { aspect-ratio: 1 / 1; }
+      .carousel-track img { height: 240px; }
+    }
   </style>
 </head>
 <body>
@@ -666,6 +907,118 @@
           <p class="service-desc">老舊鋁窗及鐵窗安全拆除與更新、房屋室內外隔間與違建專業拆除清運作業。</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- 精選施工案例 -->
+  <section id="portfolio" class="section portfolio-section">
+    <div class="container">
+      <div class="section-header fade-up">
+        <span class="tag">OUR PROJECTS</span>
+        <h2>精選施工案例</h2>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 16px auto 0;">每一個案例都是我們用心與技術的最佳見證，拖曳滑桿即可對比施工前後差異。</p>
+      </div>
+
+      <!-- Before / After 比較器 -->
+      <div class="portfolio-grid">
+
+        <!-- 東區新成屋 -->
+        <div class="portfolio-item fade-up">
+          <div class="compare-wrapper">
+            <div class="compare-container" id="compare1">
+              <img class="img-before" src="assets/東區新成屋_before.JPG" alt="東區新成屋 施工前">
+              <div class="img-after-wrap" id="compare1-after">
+                <img src="assets/東區新成屋_after.JPG" alt="東區新成屋 施工後">
+              </div>
+              <div class="compare-divider" id="compare1-div">
+                <div class="compare-handle">⇔</div>
+              </div>
+            </div>
+            <div class="compare-labels">
+              <span class="label-before">施工前</span>
+              <span class="label-after">施工後</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3>東區新成屋</h3>
+            <p>全室裝潢統包工程</p>
+          </div>
+        </div>
+
+        <!-- 美髮商空 -->
+        <div class="portfolio-item fade-up" style="transition-delay: 0.1s;">
+          <div class="compare-wrapper">
+            <div class="compare-container" id="compare2">
+              <img class="img-before" src="assets/美髮商空_before.jpg" alt="美髮商空 施工前">
+              <div class="img-after-wrap" id="compare2-after">
+                <img src="assets/美髮商空_after.jpg" alt="美髮商空 施工後">
+              </div>
+              <div class="compare-divider" id="compare2-div">
+                <div class="compare-handle">⇔</div>
+              </div>
+            </div>
+            <div class="compare-labels">
+              <span class="label-before">施工前</span>
+              <span class="label-after">施工後</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3>美髮商空</h3>
+            <p>商業空間裝修工程</p>
+          </div>
+        </div>
+
+        <!-- 泰奶商空 -->
+        <div class="portfolio-item fade-up" style="transition-delay: 0.2s;">
+          <div class="compare-wrapper">
+            <div class="compare-container" id="compare3">
+              <img class="img-before" src="assets/泰奶商空_before.JPG" alt="泰奶商空 施工前">
+              <div class="img-after-wrap" id="compare3-after">
+                <img src="assets/泰奶商空_after.JPG" alt="泰奶商空 施工後">
+              </div>
+              <div class="compare-divider" id="compare3-div">
+                <div class="compare-handle">⇔</div>
+              </div>
+            </div>
+            <div class="compare-labels">
+              <span class="label-before">施工前</span>
+              <span class="label-after">施工後</span>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <h3>泰奶商空</h3>
+            <p>商業空間裝修工程</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 北區透天翻修 輪播 -->
+      <div class="gallery-block fade-up">
+        <div class="gallery-block-header">
+          <h3>🏗️ 北區透天翻修</h3>
+          <p>完整工程翻修紀錄 · 老屋改建統包施作</p>
+        </div>
+        <div class="carousel-track-wrap">
+          <div class="carousel-track" id="carouselTrack">
+            <img src="assets/北區透天翻修.JPG" alt="北區透天翻修 1">
+            <img src="assets/北區透天翻修 (2).JPG" alt="北區透天翻修 2">
+            <img src="assets/北區透天翻修 (3).JPG" alt="北區透天翻修 3">
+            <img src="assets/北區透天翻修 (4).JPG" alt="北區透天翻修 4">
+          </div>
+        </div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="carouselPrev" aria-label="上一張">&#8592;</button>
+          <div class="carousel-dots" id="carouselDots">
+            <div class="carousel-dot active" data-index="0"></div>
+            <div class="carousel-dot" data-index="1"></div>
+            <div class="carousel-dot" data-index="2"></div>
+            <div class="carousel-dot" data-index="3"></div>
+          </div>
+          <button class="carousel-btn" id="carouselNext" aria-label="下一張">&#8594;</button>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -803,6 +1156,63 @@
       faders.forEach(fader => {
         appearOnScroll.observe(fader);
       });
+
+      // ── Before/After 比較器 ──
+      function initCompare(containerId, afterWrapId, dividerId) {
+        const container = document.getElementById(containerId);
+        const afterWrap  = document.getElementById(afterWrapId);
+        const divider    = document.getElementById(dividerId);
+        if (!container) return;
+
+        let dragging = false;
+
+        function setPos(clientX) {
+          const rect = container.getBoundingClientRect();
+          let pct = (clientX - rect.left) / rect.width * 100;
+          pct = Math.max(0, Math.min(100, pct));
+          afterWrap.style.width  = pct + '%';
+          divider.style.left     = pct + '%';
+        }
+
+        // Mouse
+        divider.addEventListener('mousedown', (e) => { dragging = true; e.preventDefault(); });
+        document.addEventListener('mouseup',  () => { dragging = false; });
+        document.addEventListener('mousemove', (e) => { if (dragging) setPos(e.clientX); });
+
+        // Touch
+        divider.addEventListener('touchstart', (e) => { dragging = true; e.preventDefault(); }, { passive: false });
+        document.addEventListener('touchend',  () => { dragging = false; });
+        document.addEventListener('touchmove', (e) => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+
+        // 初始位置 50%
+        setPos(container.getBoundingClientRect().left + container.offsetWidth * 0.5);
+      }
+
+      initCompare('compare1', 'compare1-after', 'compare1-div');
+      initCompare('compare2', 'compare2-after', 'compare2-div');
+      initCompare('compare3', 'compare3-after', 'compare3-div');
+
+      // ── 北區透天翻修 輪播 ──
+      (function() {
+        const track  = document.getElementById('carouselTrack');
+        const dots   = document.querySelectorAll('.carousel-dot');
+        const total  = 4;
+        let current  = 0;
+        let autoTimer;
+
+        function goTo(idx) {
+          current = (idx + total) % total;
+          track.style.transform = `translateX(-${current * 100}%)`;
+          dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        }
+
+        document.getElementById('carouselPrev').addEventListener('click', () => { clearInterval(autoTimer); goTo(current - 1); startAuto(); });
+        document.getElementById('carouselNext').addEventListener('click', () => { clearInterval(autoTimer); goTo(current + 1); startAuto(); });
+        dots.forEach(dot => dot.addEventListener('click', () => { clearInterval(autoTimer); goTo(+dot.dataset.index); startAuto(); }));
+
+        function startAuto() { autoTimer = setInterval(() => goTo(current + 1), 4000); }
+        startAuto();
+      })();
       
       // 導覽列滾動陰影變化
       const navbar = document.getElementById('navbar');
