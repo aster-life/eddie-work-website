@@ -723,12 +723,17 @@
       transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    .carousel-track-wrap {
+      background: #1a2035;
+    }
+
     .carousel-track img {
       min-width: 100%;
-      height: 320px;
-      object-fit: cover;
+      height: 520px;
+      object-fit: contain;
       object-position: center;
       display: block;
+      background: #1a2035;
     }
 
     .carousel-controls {
@@ -783,7 +788,7 @@
 
     @media (max-width: 600px) {
       .compare-container { aspect-ratio: 1 / 1; }
-      .carousel-track img { height: 240px; }
+      .carousel-track img { height: 420px; }
     }
   </style>
 </head>
