@@ -823,7 +823,7 @@
         專業 · 誠信 · 服務，台南最可靠的工程統包團隊
       </p>
       <div class="hero-actions fade-up" style="transition-delay: 0.3s;">
-        <a href="tel:0900019725" class="btn btn-primary">📞 立即免費諮詢：0900-019-725</a>
+        <a href="tel:0900019725" class="btn btn-primary" onclick="gtag('event', 'click_phone', {'event_category': 'Contact', 'event_label': 'Hero Section'});">📞 立即免費諮詢：0900-019-725</a>
         <a href="#contact" class="btn btn-secondary">📋 線上表單詢問</a>
       </div>
     </div>
@@ -1079,7 +1079,7 @@
             <div class="icon">📞</div>
             <div class="contact-item-text">
               <span>聯絡電話 (點擊直撥)</span>
-              <strong><a href="tel:0900019725" style="color:#fff; text-decoration:none;">0900-019-725</a></strong>
+              <strong><a href="tel:0900019725" style="color:#fff; text-decoration:none;" onclick="gtag('event', 'click_phone', {'event_category': 'Contact', 'event_label': 'Footer Form Section'});">0900-019-725</a></strong>
             </div>
           </div>
           
@@ -1261,6 +1261,15 @@
           .then(response => {
             submitBtn.disabled = false;
             submitBtn.innerText = '送出諮詢';
+            
+            // 觸發 GA4 表單送出事件
+            if (typeof gtag === 'function') {
+              gtag('event', 'generate_lead', {
+                'event_category': 'Contact',
+                'event_label': 'Submit Form'
+              });
+            }
+
             alert('感謝您的詢問！我們已收到您的資訊，將儘速與您聯繫。');
             form.reset();
           })
