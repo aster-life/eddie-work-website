@@ -1132,6 +1132,54 @@
             </div>
             
             <div class="form-group">
+              <label for="location">施工的地點（台南市）</label>
+              <select id="location" name="location" class="form-control">
+                <option value="">請選擇台南市行政區...</option>
+                <optgroup label="原台南市區">
+                  <option value="中西區">中西區</option>
+                  <option value="東區">東區</option>
+                  <option value="南區">南區</option>
+                  <option value="北區">北區</option>
+                  <option value="安平區">安平區</option>
+                  <option value="安南區">安南區</option>
+                </optgroup>
+                <optgroup label="原台南縣（山上、玉井、楠西、南化、左鎮、仁德、歸仁、關廟、龍崎、永康、新化、新市、安定、善化、大內、佳里、西港、七股、將軍、學甲、北門、新營、後壁、白河、東山、六甲、下營、柳營、鹽水、麻豆、官田、大內、玉井、楠西、南化、左鎮）">
+                  <option value="仁德區">仁德區</option>
+                  <option value="歸仁區">歸仁區</option>
+                  <option value="關廟區">關廟區</option>
+                  <option value="龍崎區">龍崎區</option>
+                  <option value="永康區">永康區</option>
+                  <option value="新化區">新化區</option>
+                  <option value="新市區">新市區</option>
+                  <option value="安定區">安定區</option>
+                  <option value="善化區">善化區</option>
+                  <option value="大內區">大內區</option>
+                  <option value="山上區">山上區</option>
+                  <option value="玉井區">玉井區</option>
+                  <option value="楠西區">楠西區</option>
+                  <option value="南化區">南化區</option>
+                  <option value="左鎮區">左鎮區</option>
+                  <option value="佳里區">佳里區</option>
+                  <option value="西港區">西港區</option>
+                  <option value="七股區">七股區</option>
+                  <option value="將軍區">將軍區</option>
+                  <option value="學甲區">學甲區</option>
+                  <option value="北門區">北門區</option>
+                  <option value="新營區">新營區</option>
+                  <option value="後壁區">後壁區</option>
+                  <option value="白河區">白河區</option>
+                  <option value="東山區">東山區</option>
+                  <option value="六甲區">六甲區</option>
+                  <option value="下營區">下營區</option>
+                  <option value="柳營區">柳營區</option>
+                  <option value="鹽水區">鹽水區</option>
+                  <option value="麻豆區">麻豆區</option>
+                  <option value="官田區">官田區</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-group">
               <label for="message">需求與問題描述</label>
               <textarea id="message" class="form-control" placeholder="請簡單敘述您的房屋狀況或需要修繕的問題..."></textarea>
             </div>
@@ -1255,6 +1303,7 @@
         formData.append('name', document.getElementById('name').value);
         formData.append('phone', document.getElementById('phone').value);
         formData.append('serviceType', document.getElementById('serviceType').value);
+        formData.append('location', document.getElementById('location').value);
         formData.append('message', document.getElementById('message').value);
 
         fetch(scriptURL, { method: 'POST', body: formData })
