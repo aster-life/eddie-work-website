@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18885428591"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18055428591"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-RPTY6TW3ZX');
-    gtag('config', 'AW-18885428591');
+    gtag('config', 'AW-18055428591');
   </script>
   <!-- 點選通話轉換追蹤函數 -->
   <script>
@@ -18,6 +18,10 @@
         window.location = url;
       }
     };
+    gtag('event', 'click_phone', {
+      'event_category': 'Contact',
+      'event_label': 'Phone Call'
+    });
     gtag('event', 'conversion', {
         'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
         'value': 1.0,
