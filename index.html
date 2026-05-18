@@ -9,6 +9,24 @@
     gtag('js', new Date());
 
     gtag('config', 'G-RPTY6TW3ZX');
+    gtag('config', 'AW-18885428591');
+  </script>
+  <!-- 點選通話轉換追蹤函數 -->
+  <script>
+  function gtag_report_conversion(url) {
+    var callback = function () {
+      if (typeof(url) != 'undefined') {
+        window.location = url;
+      }
+    };
+    gtag('event', 'conversion', {
+        'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
+        'value': 1.0,
+        'currency': 'TWD',
+        'event_callback': callback
+    });
+    return false;
+  }
   </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,7 +63,7 @@
         專業 · 誠信 · 服務，台南最可靠的工程統包團隊
       </p>
       <div class="hero-actions fade-up" style="transition-delay: 0.3s;">
-        <a href="tel:0900019725" class="btn btn-primary" onclick="gtag('event', 'click_phone', {'event_category': 'Contact', 'event_label': 'Hero Section'});">📞 立即免費諮詢：0900-019-725</a>
+        <a href="tel:0900019725" class="btn btn-primary" onclick="return gtag_report_conversion('tel:0900019725');">📞 立即免費諮詢：0900-019-725</a>
         <a href="#contact" class="btn btn-secondary">📋 線上表單詢問</a>
       </div>
     </div>
@@ -310,7 +328,7 @@
             <div class="icon">📞</div>
             <div class="contact-item-text">
               <span>聯絡電話 (點擊直撥)</span>
-              <strong><a href="tel:0900019725" style="color:#fff; text-decoration:none;" onclick="gtag('event', 'click_phone', {'event_category': 'Contact', 'event_label': 'Footer Form Section'});">0900-019-725</a></strong>
+              <strong><a href="tel:0900019725" style="color:#fff; text-decoration:none;" onclick="return gtag_report_conversion('tel:0900019725');">0900-019-725</a></strong>
             </div>
           </div>
           
