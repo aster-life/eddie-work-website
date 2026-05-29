@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // --- 表單提交邏輯 ---
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbz3_afEn4yU-6M85WQ2jZSToZ5nxLFqU-CsGrE0MZRvjF06ej4LOvo9z7K-PT9M0hc/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyQPgPIlQkk0r9BNcXdv_9uGmWtnw1nz_REKKUUriwK1Yb0Yt5AbzgH7N6o4dzpNq0F/exec';
   const form = document.querySelector('#contactForm');
   if (form) {
     const submitBtn = form.querySelector('.submit-btn');
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function() {
       params.append('location', document.getElementById('location').value);
       params.append('message', document.getElementById('message').value);
 
-      fetch(scriptURL, { method: 'POST', body: params, mode: 'no-cors' })
+      fetch(scriptURL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
         .then(() => {
           submitBtn.disabled = false;
           submitBtn.innerText = '送出諮詢';
