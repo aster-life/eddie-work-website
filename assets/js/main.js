@@ -111,19 +111,16 @@ document.addEventListener("DOMContentLoaded", function() {
       formData.append('location', document.getElementById('location').value);
       formData.append('message', document.getElementById('message').value);
 
-      fetch(scriptURL, { method: 'POST', body: formData })
-        .then(response => {
+      fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+        .then(() => {
           submitBtn.disabled = false;
           submitBtn.innerText = '送出諮詢';
-          
-          if (response.ok) {
-            // 觸發 GA4 表單送出事件 (確保伺服器成功接收才打點)
-            if (typeof gtag === 'function') {
-              gtag('event', 'generate_lead', {
-                'event_category': 'Contact',
-                'event_label': 'Submit Form'
-              });
-            }
+
+          if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', {
+              'event_category': 'Contact',
+              'event_label': 'Submit Form'
+            });
           }
 
           alert('感謝您的詢問！我們已收到您的資訊，將儘速與您聯繫。');
