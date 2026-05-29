@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // --- 表單提交邏輯 ---
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyTq-1qMHHH5nVSUkodOmv7Nl_v51DH50LtdcK_6k3JM0H3V8_cQNd6NdquhXuZHwXa9g/exec';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbz3_afEn4yU-6M85WQ2jZSToZ5nxLFqU-CsGrE0MZRvjF06ej4LOvo9z7K-PT9M0hc/exec';
   const form = document.querySelector('#contactForm');
   if (form) {
     const submitBtn = form.querySelector('.submit-btn');
@@ -104,14 +104,14 @@ document.addEventListener("DOMContentLoaded", function() {
       submitBtn.innerText = '送出中...';
 
       // 整理資料 (對應 GAS 腳本中的參數名)
-      const formData = new FormData();
-      formData.append('name', document.getElementById('name').value);
-      formData.append('phone', document.getElementById('phone').value);
-      formData.append('serviceType', document.getElementById('serviceType').value);
-      formData.append('location', document.getElementById('location').value);
-      formData.append('message', document.getElementById('message').value);
+      const params = new URLSearchParams();
+      params.append('name', document.getElementById('name').value);
+      params.append('phone', document.getElementById('phone').value);
+      params.append('serviceType', document.getElementById('serviceType').value);
+      params.append('location', document.getElementById('location').value);
+      params.append('message', document.getElementById('message').value);
 
-      fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+      fetch(scriptURL, { method: 'POST', body: params, mode: 'no-cors' })
         .then(() => {
           submitBtn.disabled = false;
           submitBtn.innerText = '送出諮詢';
