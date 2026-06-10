@@ -90,6 +90,48 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+  // --- 根據 URL 參數動態修改表單 ---
+  const urlParams = new URLSearchParams(window.location.search);
+  const serviceParam = urlParams.get('service');
+  const formPanelTitle = document.querySelector('.contact-form-panel h3');
+  const serviceSelect = document.getElementById('serviceType');
+
+  if (serviceParam && formPanelTitle && serviceSelect) {
+    let serviceValue = '';
+    let titleText = '線上諮詢表單';
+
+    switch (serviceParam) {
+      case 'bathroom':
+        serviceValue = '水電工程';
+        titleText = '索取浴室翻修報價單';
+        break;
+      case 'renovation':
+        serviceValue = '統包工程';
+        titleText = '老屋翻修免費丈量申請';
+        break;
+      case 'masonry':
+        serviceValue = '泥作工程';
+        titleText = '泥作工程報價申請';
+        break;
+      case 'kitchen':
+        serviceValue = '水電工程';
+        titleText = '廚房翻修改裝報價申請';
+        break;
+    }
+
+    if (titleText !== '線上諮詢表單') {
+      formPanelTitle.innerText = titleText;
+    }
+    
+    if (serviceValue) {
+      Array.from(serviceSelect.options).forEach(option => {
+        if (option.value === serviceValue) {
+          option.selected = true;
+        }
+      });
+    }
+  }
+
   // --- 表單提交邏輯 ---
   const scriptURL = 'https://script.google.com/macros/s/AKfycbyQPgPIlQkk0r9BNcXdv_9uGmWtnw1nz_REKKUUriwK1Yb0Yt5AbzgH7N6o4dzpNq0F/exec';
   const form = document.querySelector('#contactForm');
