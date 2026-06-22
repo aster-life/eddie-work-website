@@ -13,21 +13,38 @@
   <!-- 點選通話轉換追蹤函數 -->
   <script>
   function gtag_report_conversion(url) {
-    var callback = function () {
-      if (typeof(url) != 'undefined') {
-        window.location = url;
+    var destination = typeof(url) !== 'undefined' ? url : '';
+    var didNavigate = false;
+
+    function navigate() {
+      if (didNavigate || !destination) {
+        return;
       }
-    };
-    gtag('event', 'click_phone', {
-      'event_category': 'Contact',
-      'event_label': 'Phone Call'
-    });
-    gtag('event', 'conversion', {
-        'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
-        'value': 1.0,
-        'currency': 'TWD',
-        'event_callback': callback
-    });
+
+      didNavigate = true;
+      window.location = destination;
+    }
+
+    var fallbackTimer = setTimeout(navigate, 300);
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'click_phone', {
+        'event_category': 'Contact',
+        'event_label': 'Phone Call'
+      });
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
+          'value': 1.0,
+          'currency': 'TWD',
+          'event_callback': function () {
+            clearTimeout(fallbackTimer);
+            navigate();
+          }
+      });
+    } else {
+      navigate();
+    }
+
     return false;
   }
   </script>
@@ -54,7 +71,12 @@
   <!-- 導覽列 -->
   <nav id="navbar">
     <a href="index.html" class="logo" style="text-decoration: none;">豈樂工程行</a>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="切換導覽選單" aria-expanded="false" aria-controls="site-nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="site-nav-links">
       <li><a href="index.html#about">關於我們</a></li>
       <li><a href="index.html#services">服務項目</a></li>
       <li><a href="index.html#contact">聯絡表單</a></li>
@@ -129,3 +151,4 @@
   <script src="assets/js/main.js"></script>
 </body>
 </html>
+

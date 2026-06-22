@@ -17,36 +17,46 @@ document.addEventListener("DOMContentLoaded", function() {
     appearOnScroll.observe(fader);
   });
 
-  // ── Before/After 比較器 ──
   function initCompare(containerId, afterWrapId, dividerId) {
     const container = document.getElementById(containerId);
-    const afterWrap  = document.getElementById(afterWrapId);
-    const divider    = document.getElementById(dividerId);
-    if (!container) return;
+    const afterWrap = document.getElementById(afterWrapId);
+    const divider = document.getElementById(dividerId);
+    if (!container || !afterWrap || !divider) return;
 
     let dragging = false;
 
     function setPos(clientX) {
       const rect = container.getBoundingClientRect();
-      let pct = (clientX - rect.left) / rect.width * 100;
+      let pct = ((clientX - rect.left) / rect.width) * 100;
       pct = Math.max(0, Math.min(100, pct));
-      afterWrap.style.width  = pct + '%';
-      divider.style.left     = pct + '%';
+      afterWrap.style.width = pct + '%';
+      divider.style.left = pct + '%';
     }
 
-    // Mouse
-    divider.addEventListener('mousedown', (e) => { dragging = true; e.preventDefault(); });
-    document.addEventListener('mouseup',  () => { dragging = false; });
-    document.addEventListener('mousemove', (e) => { if (dragging) setPos(e.clientX); });
+    divider.addEventListener('mousedown', (e) => {
+      dragging = true;
+      e.preventDefault();
+    });
+    document.addEventListener('mouseup', () => {
+      dragging = false;
+    });
+    document.addEventListener('mousemove', (e) => {
+      if (dragging) setPos(e.clientX);
+    });
 
-    // Touch
-    divider.addEventListener('touchstart', (e) => { dragging = true; e.preventDefault(); }, { passive: false });
-    document.addEventListener('touchend',  () => { dragging = false; });
-    document.addEventListener('touchmove', (e) => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+    divider.addEventListener('touchstart', (e) => {
+      dragging = true;
+      e.preventDefault();
+    }, { passive: false });
+    document.addEventListener('touchend', () => {
+      dragging = false;
+    });
+    document.addEventListener('touchmove', (e) => {
+      if (dragging) setPos(e.touches[0].clientX);
+    }, { passive: true });
 
-    // 初始位置 50%
     if (container.offsetWidth > 0) {
-      setPos(container.getBoundingClientRect().left + container.offsetWidth * 0.5);
+      setPos(container.getBoundingClientRect().left + (container.offsetWidth * 0.5));
     }
   }
 
@@ -54,12 +64,11 @@ document.addEventListener("DOMContentLoaded", function() {
   initCompare('compare2', 'compare2-after', 'compare2-div');
   initCompare('compare3', 'compare3-after', 'compare3-div');
 
-  // ── 北區透天翻修 輪播 ──
-  const track  = document.getElementById('carouselTrack');
+  const track = document.getElementById('carouselTrack');
   if (track) {
-    const dots   = document.querySelectorAll('.carousel-dot');
-    const total  = 4;
-    let current  = 0;
+    const dots = document.querySelectorAll('.carousel-dot');
+    const total = 4;
+    let current = 0;
     let autoTimer;
 
     function goTo(idx) {
@@ -68,18 +77,39 @@ document.addEventListener("DOMContentLoaded", function() {
       dots.forEach((d, i) => d.classList.toggle('active', i === current));
     }
 
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1), 4000);
+    }
+
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
-    if (prevBtn) prevBtn.addEventListener('click', () => { clearInterval(autoTimer); goTo(current - 1); startAuto(); });
-    if (nextBtn) nextBtn.addEventListener('click', () => { clearInterval(autoTimer); goTo(current + 1); startAuto(); });
-    dots.forEach(dot => dot.addEventListener('click', () => { clearInterval(autoTimer); goTo(+dot.dataset.index); startAuto(); }));
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      goTo(current - 1);
+      startAuto();
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      goTo(current + 1);
+      startAuto();
+    });
+    dots.forEach(dot => dot.addEventListener('click', () => {
+      goTo(Number(dot.dataset.index));
+      startAuto();
+    }));
 
-    function startAuto() { autoTimer = setInterval(() => goTo(current + 1), 4000); }
     startAuto();
   }
-  
-  // 導覽列滾動陰影變化
+
   const navbar = document.getElementById('navbar');
+  const navToggle = document.querySelector('.nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  function closeMobileNav() {
+    if (!navbar || !navToggle) return;
+    navbar.classList.remove('nav-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+
   if (navbar) {
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
@@ -90,90 +120,138 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // --- 根據 URL 參數動態修改表單 ---
+  if (navbar && navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navbar.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          closeMobileNav();
+        }
+      });
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeMobileNav();
+      }
+    });
+  }
+
+  const serviceConfig = {
+    bathroom: {
+      serviceValue: '水電工程',
+      titleText: '索取浴室翻修報價單'
+    },
+    renovation: {
+      serviceValue: '統包工程',
+      titleText: '老屋翻修免費丈量申請'
+    },
+    masonry: {
+      serviceValue: '泥作工程',
+      titleText: '泥作工程報價申請'
+    },
+    kitchen: {
+      serviceValue: '水電工程',
+      titleText: '廚房翻修改裝報價申請'
+    },
+    flooring: {
+      serviceValue: '地板工程',
+      titleText: '地板工程免費丈量申請'
+    },
+    building: {
+      serviceValue: '自地自建',
+      titleText: '自地自建諮詢申請'
+    }
+  };
+
   const urlParams = new URLSearchParams(window.location.search);
   const serviceParam = urlParams.get('service');
+  const activeService = serviceParam ? serviceConfig[serviceParam] : null;
   const formPanelTitle = document.querySelector('.contact-form-panel h3');
   const serviceSelect = document.getElementById('serviceType');
 
-  if (serviceParam && formPanelTitle && serviceSelect) {
-    let serviceValue = '';
-    let titleText = '線上諮詢表單';
+  function applyServiceSelection() {
+    if (!activeService || !formPanelTitle || !serviceSelect) return;
 
-    switch (serviceParam) {
-      case 'bathroom':
-        serviceValue = '水電工程';
-        titleText = '索取浴室翻修報價單';
-        break;
-      case 'renovation':
-        serviceValue = '統包工程';
-        titleText = '老屋翻修免費丈量申請';
-        break;
-      case 'masonry':
-        serviceValue = '泥作工程';
-        titleText = '泥作工程報價申請';
-        break;
-      case 'kitchen':
-        serviceValue = '水電工程';
-        titleText = '廚房翻修改裝報價申請';
-        break;
-    }
-
-    if (titleText !== '線上諮詢表單') {
-      formPanelTitle.innerText = titleText;
-    }
-    
-    if (serviceValue) {
-      Array.from(serviceSelect.options).forEach(option => {
-        if (option.value === serviceValue) {
-          option.selected = true;
-        }
-      });
-    }
+    formPanelTitle.innerText = activeService.titleText;
+    Array.from(serviceSelect.options).forEach(option => {
+      option.selected = option.value === activeService.serviceValue;
+    });
   }
 
-  // --- 表單提交邏輯 ---
+  applyServiceSelection();
+
   const scriptURL = 'https://script.google.com/macros/s/AKfycbyQPgPIlQkk0r9BNcXdv_9uGmWtnw1nz_REKKUUriwK1Yb0Yt5AbzgH7N6o4dzpNq0F/exec';
   const form = document.querySelector('#contactForm');
   if (form) {
     const submitBtn = form.querySelector('.submit-btn');
+    const defaultSubmitText = submitBtn ? submitBtn.innerText : '送出諮詢';
 
-    form.addEventListener('submit', e => {
+    form.addEventListener('submit', async e => {
       e.preventDefault();
-      
-      // 防止重複送出
+      if (!submitBtn) return;
+
       submitBtn.disabled = true;
       submitBtn.innerText = '送出中...';
 
-      // 整理資料 (對應 GAS 腳本中的參數名)
       const params = new URLSearchParams();
-      params.append('name', document.getElementById('name').value);
-      params.append('phone', document.getElementById('phone').value);
-      params.append('serviceType', document.getElementById('serviceType').value);
-      params.append('location', document.getElementById('location').value);
-      params.append('message', document.getElementById('message').value);
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const lineId = document.getElementById('lineId')?.value.trim() || '';
+      const serviceType = document.getElementById('serviceType').value;
+      const location = document.getElementById('location').value;
+      const message = document.getElementById('message').value.trim();
+      const normalizedMessage = lineId
+        ? `${message}${message ? '\n\n' : ''}LINE ID：${lineId}`
+        : message;
 
-      fetch(scriptURL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' })
-        .then(() => {
-          submitBtn.disabled = false;
-          submitBtn.innerText = '送出諮詢';
+      params.append('name', name);
+      params.append('phone', phone);
+      params.append('lineId', lineId);
+      params.append('serviceType', serviceType);
+      params.append('location', location);
+      params.append('message', normalizedMessage);
+      params.append('sourceUrl', window.location.href);
+      params.append('userAgent', navigator.userAgent);
 
-          if (typeof gtag === 'function') {
-            gtag('event', 'generate_lead', {
-              'event_category': 'Contact',
-              'event_label': 'Submit Form'
-            });
+      try {
+        const response = await fetch(`${scriptURL}?${params.toString()}`, {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-store',
+          headers: {
+            Accept: 'text/plain'
           }
-
-          alert('感謝您的詢問！我們已收到您的資訊，將儘速與您聯繫。');
-          form.reset();
-        })
-        .catch(error => {
-          submitBtn.disabled = false;
-          submitBtn.innerText = '再次送出';
-          console.error('Error!', error.message);
-          alert('傳送發生錯誤，請稍後再試，或直接撥打電話聯繫，謝謝！');
         });
+
+        const responseText = (await response.text()).trim();
+        if (!response.ok || !/success/i.test(responseText)) {
+          throw new Error(responseText || `Unexpected response: ${response.status}`);
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.innerText = defaultSubmitText;
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            event_category: 'Contact',
+            event_label: 'Submit Form'
+          });
+        }
+
+        alert('感謝您的詢問！表單已成功送出，我們會在 24 小時內與您聯繫。');
+        form.reset();
+        applyServiceSelection();
+      } catch (error) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = '再次送出';
+        console.error('Form submit error:', error);
+        alert('表單送出失敗，請稍後再試，或直接撥打 0900-019-725 聯繫我們。');
+      }
     });
   }
 });

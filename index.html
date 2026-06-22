@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
   <!-- Google tag (gtag.js) -->
@@ -14,21 +14,38 @@
   <!-- 點選通話轉換追蹤函數 -->
   <script>
   function gtag_report_conversion(url) {
-    var callback = function () {
-      if (typeof(url) != 'undefined') {
-        window.location = url;
+    var destination = typeof(url) !== 'undefined' ? url : '';
+    var didNavigate = false;
+
+    function navigate() {
+      if (didNavigate || !destination) {
+        return;
       }
-    };
-    gtag('event', 'click_phone', {
-      'event_category': 'Contact',
-      'event_label': 'Phone Call'
-    });
-    gtag('event', 'conversion', {
-        'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
-        'value': 1.0,
-        'currency': 'TWD',
-        'event_callback': callback
-    });
+
+      didNavigate = true;
+      window.location = destination;
+    }
+
+    var fallbackTimer = setTimeout(navigate, 300);
+
+    if (typeof gtag === 'function') {
+      gtag('event', 'click_phone', {
+        'event_category': 'Contact',
+        'event_label': 'Phone Call'
+      });
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
+          'value': 1.0,
+          'currency': 'TWD',
+          'event_callback': function () {
+            clearTimeout(fallbackTimer);
+            navigate();
+          }
+      });
+    } else {
+      navigate();
+    }
+
     return false;
   }
   </script>
@@ -44,13 +61,17 @@
   
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-</head>
 <body>
 
   <!-- 導覽列 -->
   <nav id="navbar">
     <div class="logo">豈樂工程行</div>
-    <ul class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="切換導覽選單" aria-expanded="false" aria-controls="site-nav-links">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="site-nav-links">
       <li><a href="#about">關於我們</a></li>
       <li><a href="#services">服務項目</a></li>
       <li><a href="#reviews">真實評價</a></li>
@@ -368,6 +389,11 @@
               <label for="phone">聯絡電話 (必填)</label>
               <input type="tel" id="phone" class="form-control" placeholder="請輸入手機或市話" required>
             </div>
+
+            <div class="form-group">
+              <label for="lineId">LINE ID</label>
+              <input type="text" id="lineId" class="form-control" placeholder="方便聯繫的 LINE ID（選填）">
+            </div>
             
             <div class="form-group">
               <label for="serviceType">需要諮詢的工程項目</label>
@@ -378,6 +404,8 @@
                 <option value="泥作工程">泥作工程 (磁磚/打壁)</option>
                 <option value="油漆工程">油漆粉刷/防水</option>
                 <option value="木工裝潢">木工裝潢</option>
+                <option value="地板工程">地板工程</option>
+                <option value="自地自建">自地自建</option>
                 <option value="鋼筋板模">鋼筋板模鷹架</option>
                 <option value="拆除工程">拆除工程</option>
                 <option value="其他">其他 / 不確定</option>
@@ -452,3 +480,5 @@
 
 </body>
 </html>
+
+
