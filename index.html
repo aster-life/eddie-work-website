@@ -204,82 +204,11 @@
       <div class="section-header fade-up">
         <span class="tag">OUR PROJECTS</span>
         <h2>精選施工案例</h2>
-        <p style="color: var(--text-muted); max-width: 600px; margin: 16px auto 0;">每一個案例都是我們用心與技術的最佳見證，拖曳滑桿即可對比施工前後差異。</p>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 16px auto 0;">每一個案例都是我們用心與技術的最佳見證，拖曳滑桿即可對比施工前後差異；展開卡片即可瀏覽完整工程照片。</p>
       </div>
 
-      <!-- Before / After 比較器 -->
-      <div class="portfolio-grid">
-
-        <!-- 東區新成屋 -->
-        <div class="portfolio-item fade-up">
-          <div class="compare-wrapper">
-            <div class="compare-container" id="compare1">
-              <img class="img-before" src="assets/東區新成屋_before.JPG" alt="東區新成屋 施工前">
-              <div class="img-after-wrap" id="compare1-after">
-                <img src="assets/東區新成屋_after.JPG" alt="東區新成屋 施工後">
-              </div>
-              <div class="compare-divider" id="compare1-div">
-                <div class="compare-handle">⇔</div>
-              </div>
-            </div>
-            <div class="compare-labels">
-              <span class="label-before">施工前</span>
-              <span class="label-after">施工後</span>
-            </div>
-          </div>
-          <div class="portfolio-info">
-            <h3>東區新成屋</h3>
-            <p>全室裝潢統包工程</p>
-          </div>
-        </div>
-
-        <!-- 美髮商空 -->
-        <div class="portfolio-item fade-up" style="transition-delay: 0.1s;">
-          <div class="compare-wrapper">
-            <div class="compare-container" id="compare2">
-              <img class="img-before" src="assets/美髮商空_before.jpg" alt="美髮商空 施工前">
-              <div class="img-after-wrap" id="compare2-after">
-                <img src="assets/美髮商空_after.jpg" alt="美髮商空 施工後">
-              </div>
-              <div class="compare-divider" id="compare2-div">
-                <div class="compare-handle">⇔</div>
-              </div>
-            </div>
-            <div class="compare-labels">
-              <span class="label-before">施工前</span>
-              <span class="label-after">施工後</span>
-            </div>
-          </div>
-          <div class="portfolio-info">
-            <h3>美髮商空</h3>
-            <p>商業空間裝修工程</p>
-          </div>
-        </div>
-
-        <!-- 泰奶商空 -->
-        <div class="portfolio-item fade-up" style="transition-delay: 0.2s;">
-          <div class="compare-wrapper">
-            <div class="compare-container" id="compare3">
-              <img class="img-before" src="assets/泰奶商空_before.JPG" alt="泰奶商空 施工前">
-              <div class="img-after-wrap" id="compare3-after">
-                <img src="assets/泰奶商空_after.JPG" alt="泰奶商空 施工後">
-              </div>
-              <div class="compare-divider" id="compare3-div">
-                <div class="compare-handle">⇔</div>
-              </div>
-            </div>
-            <div class="compare-labels">
-              <span class="label-before">施工前</span>
-              <span class="label-after">施工後</span>
-            </div>
-          </div>
-          <div class="portfolio-info">
-            <h3>泰奶商空</h3>
-            <p>商業空間裝修工程</p>
-          </div>
-        </div>
-
-      </div>
+      <!-- 施工前後比較器與完整工程相簿由 project-gallery.js 載入 -->
+      <div class="portfolio-grid" id="portfolioCases"></div>
 
       <!-- 北區透天翻修 輪播 -->
       <div class="gallery-block fade-up">
@@ -475,6 +404,7 @@
     <p style="font-size: 0.85rem; color: #64748b;">Copyright &copy; 豈樂土木房屋建築修繕工程行 All Rights Reserved.</p>
   </footer>
 
+  <script src="assets/js/project-gallery.js"></script>
   <!-- 簡易滾動動畫 Script -->
   <script src="assets/js/main.js"></script>
 

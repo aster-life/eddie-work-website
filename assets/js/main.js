@@ -17,52 +17,54 @@ document.addEventListener("DOMContentLoaded", function() {
     appearOnScroll.observe(fader);
   });
 
-  function initCompare(containerId, afterWrapId, dividerId) {
-    const container = document.getElementById(containerId);
-    const afterWrap = document.getElementById(afterWrapId);
-    const divider = document.getElementById(dividerId);
+  function initCompare(container) {
+    const afterWrap = container.querySelector('.img-after-wrap');
+    const divider = container.querySelector('.compare-divider');
     if (!container || !afterWrap || !divider) return;
 
     let dragging = false;
 
-    function setPos(clientX) {
+    function setPos(pct) {
+      const boundedPct = Math.max(0, Math.min(100, pct));
+      afterWrap.style.width = boundedPct + '%';
+      divider.style.left = boundedPct + '%';
+      divider.setAttribute('aria-valuenow', Math.round(boundedPct));
+    }
+
+    function setPosFromPointer(clientX) {
       const rect = container.getBoundingClientRect();
-      let pct = ((clientX - rect.left) / rect.width) * 100;
-      pct = Math.max(0, Math.min(100, pct));
-      afterWrap.style.width = pct + '%';
-      divider.style.left = pct + '%';
+      setPos(((clientX - rect.left) / rect.width) * 100);
     }
 
-    divider.addEventListener('mousedown', (e) => {
+    divider.addEventListener('pointerdown', (e) => {
       dragging = true;
+      divider.setPointerCapture(e.pointerId);
       e.preventDefault();
     });
-    document.addEventListener('mouseup', () => {
-      dragging = false;
+    divider.addEventListener('pointermove', (e) => {
+      if (dragging) setPosFromPointer(e.clientX);
     });
-    document.addEventListener('mousemove', (e) => {
-      if (dragging) setPos(e.clientX);
+    ['pointerup', 'pointercancel'].forEach(eventName => {
+      divider.addEventListener(eventName, () => {
+        dragging = false;
+      });
+    });
+    divider.addEventListener('keydown', (e) => {
+      const current = Number(divider.getAttribute('aria-valuenow'));
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setPos(current - 5);
+      }
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        setPos(current + 5);
+      }
     });
 
-    divider.addEventListener('touchstart', (e) => {
-      dragging = true;
-      e.preventDefault();
-    }, { passive: false });
-    document.addEventListener('touchend', () => {
-      dragging = false;
-    });
-    document.addEventListener('touchmove', (e) => {
-      if (dragging) setPos(e.touches[0].clientX);
-    }, { passive: true });
-
-    if (container.offsetWidth > 0) {
-      setPos(container.getBoundingClientRect().left + (container.offsetWidth * 0.5));
-    }
+    setPos(50);
   }
 
-  initCompare('compare1', 'compare1-after', 'compare1-div');
-  initCompare('compare2', 'compare2-after', 'compare2-div');
-  initCompare('compare3', 'compare3-after', 'compare3-div');
+  document.querySelectorAll('[data-compare]').forEach(initCompare);
 
   const track = document.getElementById('carouselTrack');
   if (track) {
