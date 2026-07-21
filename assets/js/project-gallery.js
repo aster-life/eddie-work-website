@@ -1,17 +1,18 @@
+// 首頁縮圖使用逐案挑選的代表性前後照片，不等同於完整相簿的排序。
 const projectCases = [
-  { slug: 'east-district-new-home', name: '東區新屋裝潢', description: '全室裝潢統包工程', before: 5, after: 6 },
-  { slug: 'hair-salon', name: '美髮商空', description: '商業空間裝修工程', before: 1, after: 3 },
-  { slug: 'thai-tea-shop', name: '泰奶商空', description: '商業空間裝修工程', before: 3, after: 3 },
-  { slug: 'xinying-new-home', name: '新營區新成屋裝潢', description: '新成屋室內裝潢工程', before: 7, after: 12 },
-  { slug: 'duplex-build', name: '雙透天自地自建', description: '自地自建工程', before: 5, after: 5 },
-  { slug: 'tile-renovation', name: '地磚翻新案場', description: '地磚翻新工程', before: 4, after: 4 },
-  { slug: 'century-house-structure', name: '百年老屋翻新結構補強', description: '老屋結構補強與翻新工程', before: 10, after: 9 },
-  { slug: 'rende-floor-leveling', name: '仁德區地板整平工程', description: '地板整平工程', before: 10, after: 3 },
-  { slug: 'renhe-bathroom-balcony', name: '仁和路浴室陽台翻修', description: '浴室與陽台翻修工程', before: 7, after: 5 },
-  { slug: 'guantian-bathroom', name: '官田浴室翻修工程', description: '浴室翻修工程', before: 3, after: 5 },
-  { slug: 'east-district-elevator', name: '東區增建加裝電梯', description: '增建與電梯加裝工程', before: 7, after: 4 },
-  { slug: 'datong-bathroom-floor', name: '大同路浴室及房間地板更新', description: '衛浴與房間地板翻修工程', before: 5, after: 5 },
-  { slug: 'yongkang-floor-damp', name: '永康地坪及壁癌工程', description: '地坪與壁癌修繕工程', before: 7, after: 6 }
+  { slug: 'east-district-new-home', name: '東區新屋裝潢', description: '全室裝潢統包工程', before: 5, after: 6, thumbnail: { before: 2, after: 1 } },
+  { slug: 'hair-salon', name: '美髮商空', description: '商業空間裝修工程', before: 1, after: 3, thumbnail: { before: 1, after: 3 } },
+  { slug: 'thai-tea-shop', name: '泰奶商空', description: '商業空間裝修工程', before: 3, after: 3, thumbnail: { before: 1, after: 1 } },
+  { slug: 'xinying-new-home', name: '新營區新成屋裝潢', description: '新成屋室內裝潢工程', before: 7, after: 12, thumbnail: { before: 1, after: 1 } },
+  { slug: 'duplex-build', name: '雙透天自地自建', description: '自地自建工程', before: 5, after: 5, thumbnail: { before: 1, after: 1 } },
+  { slug: 'tile-renovation', name: '地磚翻新案場', description: '地磚翻新工程', before: 4, after: 4, thumbnail: { before: 1, after: 1 } },
+  { slug: 'century-house-structure', name: '百年老屋翻新結構補強', description: '老屋結構補強與翻新工程', before: 10, after: 9, thumbnail: { before: 1, after: 6 } },
+  { slug: 'rende-floor-leveling', name: '仁德區地板整平工程', description: '地板整平工程', before: 10, after: 3, thumbnail: { before: 1, after: 1 } },
+  { slug: 'renhe-bathroom-balcony', name: '仁和路浴室陽台翻修', description: '浴室與陽台翻修工程', before: 7, after: 5, thumbnail: { before: 4, after: 4 } },
+  { slug: 'guantian-bathroom', name: '官田浴室翻修工程', description: '浴室翻修工程', before: 3, after: 5, thumbnail: { before: 1, after: 5 } },
+  { slug: 'east-district-elevator', name: '東區增建加裝電梯', description: '增建與電梯加裝工程', before: 7, after: 4, thumbnail: { before: 2, after: 2 } },
+  { slug: 'datong-bathroom-floor', name: '大同路浴室及房間地板更新', description: '衛浴與房間地板翻修工程', before: 5, after: 5, thumbnail: { before: 5, after: 5 } },
+  { slug: 'yongkang-floor-damp', name: '永康地坪及壁癌工程', description: '地坪與壁癌修繕工程', before: 7, after: 6, thumbnail: { before: 4, after: 4 } }
 ];
 
 function projectImagePath(project, stage, number) {
@@ -28,8 +29,9 @@ function projectImages(project, stage) {
 }
 
 function renderProjectCard(project, index) {
-  const beforeImage = projectImagePath(project, 'before', 1);
-  const afterImage = projectImagePath(project, 'after', 1);
+  const thumbnail = project.thumbnail || { before: 1, after: 1 };
+  const beforeImage = projectImagePath(project, 'before', thumbnail.before);
+  const afterImage = projectImagePath(project, 'after', thumbnail.after);
   const allImages = [...projectImages(project, 'before'), ...projectImages(project, 'after')];
   const delay = (index % 3) * 0.1;
   const galleryImages = allImages.map(image => `
@@ -43,9 +45,9 @@ function renderProjectCard(project, index) {
     <article class="portfolio-item fade-up" style="transition-delay: ${delay}s;">
       <div class="compare-wrapper">
         <div class="compare-container" data-compare>
-          <img class="img-before" src="${beforeImage}" alt="${project.name} 施工前">
+          <img class="img-before" src="${afterImage}" alt="${project.name} 施工後">
           <div class="img-after-wrap">
-            <img src="${afterImage}" alt="${project.name} 施工後">
+            <img src="${beforeImage}" alt="${project.name} 施工前">
           </div>
           <div class="compare-divider" role="slider" tabindex="0" aria-label="${project.name} 施工前後比較" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
             <div class="compare-handle" aria-hidden="true">⇔</div>
