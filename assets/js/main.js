@@ -188,6 +188,11 @@ document.addEventListener("DOMContentLoaded", function() {
   applyServiceSelection();
 
   const scriptURL = 'https://script.google.com/macros/s/AKfycbyQPgPIlQkk0r9BNcXdv_9uGmWtnw1nz_REKKUUriwK1Yb0Yt5AbzgH7N6o4dzpNq0F/exec';
+  const submissionNotice = [
+    '親愛的業主您好：',
+    '感謝您的諮詢。近期工程案件較滿，我們不一定能即時回覆；如需安排場勘，最快需等到 9 月中旬後。',
+    '如有緊急需求，歡迎直接來電 0900-019-725 詢問，謝謝您的理解！'
+  ].join('\n\n');
   const form = document.querySelector('#contactForm');
   if (form) {
     const submitBtn = form.querySelector('.submit-btn');
@@ -245,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function() {
           });
         }
 
-        alert('感謝您的詢問！表單已成功送出，我們會在 24 小時內與您聯繫。');
+        alert(`感謝您的詢問！表單已成功送出。\n\n${submissionNotice}`);
         form.reset();
         applyServiceSelection();
       } catch (error) {
