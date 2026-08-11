@@ -1,0 +1,23 @@
+# 基準參考：https://www.toptal.com/developers/gitignore/api/windows,macos
+# 本專案為純靜態網站（GitHub Pages 發布），僅保留實際會產生的干擾檔規則。
+
+### Windows ###
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+*.lnk
+
+### macOS ###
+.DS_Store
+._*
+
+### Google Drive 同步暫存檔 ###
+.tmp.drivedownload/
+.tmp.driveupload/
+
+### 本機 AI 工具設定（不隨網站公開發布） ###
+.claude/
