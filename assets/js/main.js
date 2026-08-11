@@ -156,10 +156,6 @@ document.addEventListener("DOMContentLoaded", function() {
       serviceValue: '泥作工程',
       titleText: '泥作工程報價申請'
     },
-    kitchen: {
-      serviceValue: '水電工程',
-      titleText: '廚房翻修改裝報價申請'
-    },
     flooring: {
       serviceValue: '地板工程',
       titleText: '地板工程免費丈量申請'
