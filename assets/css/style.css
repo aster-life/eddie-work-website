@@ -589,38 +589,11 @@ textarea.form-control {
   line-height: 1.25;
 }
 
-.submission-dialog-lead,
-.submission-dialog-note {
+.submission-dialog-lead {
   color: var(--text-muted);
   font-size: 0.98rem;
   line-height: 1.75;
-}
-
-.submission-dialog-schedule {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 20px 0 16px;
-  padding: 14px 16px;
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  border-radius: 14px;
-  background: #fffaf0;
-}
-
-.submission-dialog-schedule span {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.submission-dialog-schedule strong {
-  color: var(--accent-hover);
-  font-size: 1.05rem;
-}
-
-.submission-dialog-note {
-  margin-bottom: 14px;
+  margin-bottom: 20px;
 }
 
 .submission-dialog-phone {
@@ -1157,12 +1130,6 @@ footer .logo-bottom {
 
   .submission-dialog-content h2 {
     font-size: 1.55rem;
-  }
-
-  .submission-dialog-schedule {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 2px;
   }
 }
 

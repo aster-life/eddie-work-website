@@ -298,22 +298,22 @@
         <!-- 右側內嵌表單 -->
         <div class="contact-form-panel">
           <h3>線上諮詢表單</h3>
-          <p>填寫您的需求，我們會在時間允許時與您聯繫；近期工程案件較滿，場勘最快安排於 9 月中旬後。</p>
+          <p>填寫您的需求，我們會盡快與您聯繫，並安排現場勘查。</p>
           
           <form id="contactForm">
             <div class="form-group">
               <label for="name">您的姓名 (必填)</label>
-              <input type="text" id="name" class="form-control" placeholder="請輸入姓名" required>
+              <input type="text" id="name" class="form-control" placeholder="請輸入姓名" maxlength="30" required>
             </div>
             
             <div class="form-group">
               <label for="phone">聯絡電話 (必填)</label>
-              <input type="tel" id="phone" class="form-control" placeholder="請輸入手機或市話" required>
+              <input type="tel" id="phone" class="form-control" placeholder="請輸入手機或市話" maxlength="30" required>
             </div>
 
             <div class="form-group">
               <label for="lineId">LINE ID</label>
-              <input type="text" id="lineId" class="form-control" placeholder="方便聯繫的 LINE ID（選填）">
+              <input type="text" id="lineId" class="form-control" placeholder="方便聯繫的 LINE ID（選填）" maxlength="50">
             </div>
             
             <div class="form-group">
@@ -379,7 +379,7 @@
 
             <div class="form-group">
               <label for="message">需求與問題描述</label>
-              <textarea id="message" class="form-control" placeholder="請簡單敘述您的房屋狀況或需要修繕的問題..."></textarea>
+              <textarea id="message" class="form-control" placeholder="請簡單敘述您的房屋狀況或需要修繕的問題..." maxlength="800"></textarea>
             </div>
             
             <button type="submit" class="btn btn-primary submit-btn">送出諮詢</button>
@@ -389,20 +389,13 @@
     </div>
   </section>
 
-  <dialog id="submissionNotice" class="submission-dialog" aria-labelledby="submissionNoticeTitle" aria-describedby="submissionNoticeLead submissionNoticeNote">
+  <dialog id="submissionNotice" class="submission-dialog" aria-labelledby="submissionNoticeTitle" aria-describedby="submissionNoticeLead">
     <div class="submission-dialog-card">
       <div class="submission-dialog-icon" aria-hidden="true">✓</div>
       <div class="submission-dialog-content">
         <p class="submission-dialog-eyebrow">諮詢已送出</p>
         <h2 id="submissionNoticeTitle">謝謝您的詢問</h2>
-        <p id="submissionNoticeLead" class="submission-dialog-lead">我們已收到您的需求，會在時間允許時回覆您。</p>
-
-        <div class="submission-dialog-schedule">
-          <span>場勘安排</span>
-          <strong>最快 9 月中旬後</strong>
-        </div>
-
-        <p id="submissionNoticeNote" class="submission-dialog-note">近期工程案件較滿，若有緊急需求，歡迎直接來電詢問。</p>
+        <p id="submissionNoticeLead" class="submission-dialog-lead">我們已收到您的需求，會盡快回覆您。</p>
 
         <a class="submission-dialog-phone" href="tel:0900019725">
           <span class="submission-dialog-phone-icon" aria-hidden="true">☎</span>

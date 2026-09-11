@@ -204,20 +204,48 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitBtn = form.querySelector('.submit-btn');
     const defaultSubmitText = submitBtn ? submitBtn.innerText : '送出諮詢';
 
+    // 表單資料是接在網址後面送出的，Google 對整串網址有長度上限；
+    // 超過就會被擋下並變成送出失敗，這裡留安全餘裕先擋下來。
+    const maxRequestUrlLength = 9500;
+
+    const nameField = document.getElementById('name');
+    const phoneField = document.getElementById('phone');
+    const messageField = document.getElementById('message');
+    const requiredFields = [
+      { el: nameField, label: '姓名' },
+      { el: phoneField, label: '聯絡電話' }
+    ];
+
+    // 使用者重新輸入時清掉前一次的提示，否則原生驗證訊息會一直卡著
+    [nameField, phoneField, messageField].forEach(el => {
+      if (el) el.addEventListener('input', () => el.setCustomValidity(''));
+    });
+
     form.addEventListener('submit', async e => {
       e.preventDefault();
       if (!submitBtn) return;
 
-      submitBtn.disabled = true;
-      submitBtn.innerText = '送出中...';
+      // 只打空白的必填欄位會通過瀏覽器的 required 檢查，這裡補上實際內容檢查
+      let hasBlankRequired = false;
+      requiredFields.forEach(({ el, label }) => {
+        if (!el) return;
+        const isBlank = !el.value.trim();
+        el.setCustomValidity(isBlank ? `請填寫${label}` : '');
+        if (isBlank) hasBlankRequired = true;
+      });
+
+      if (hasBlankRequired) {
+        form.reportValidity();
+        return;
+      }
 
       const params = new URLSearchParams();
-      const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
+      const name = nameField.value.trim();
+      const phone = phoneField.value.trim();
       const lineId = document.getElementById('lineId')?.value.trim() || '';
       const serviceType = document.getElementById('serviceType').value;
       const location = document.getElementById('location').value;
-      const message = document.getElementById('message').value.trim();
+      const message = messageField ? messageField.value.trim() : '';
       const normalizedMessage = lineId
         ? `${message}${message ? '\n\n' : ''}LINE ID：${lineId}`
         : message;
@@ -231,8 +259,21 @@ document.addEventListener("DOMContentLoaded", function() {
       params.append('sourceUrl', window.location.href);
       params.append('userAgent', navigator.userAgent);
 
+      const requestUrl = `${scriptURL}?${params.toString()}`;
+
+      // 網址過長時 Google 會回一個不帶跨網域標頭的錯誤頁，
+      // 瀏覽器會直接判定連線失敗，所以在送出前先改成可讀的提示
+      if (requestUrl.length > maxRequestUrlLength && messageField) {
+        messageField.setCustomValidity('內容太長了，請精簡後再送出，或直接撥打 0900-019-725 跟我們說。');
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerText = '送出中...';
+
       try {
-        const response = await fetch(`${scriptURL}?${params.toString()}`, {
+        const response = await fetch(requestUrl, {
           method: 'GET',
           mode: 'cors',
           cache: 'no-store',
