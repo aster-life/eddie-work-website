@@ -1146,5 +1146,63 @@ footer .logo-bottom {
   border: 0;
 }
 
+/* ── LINE 諮詢浮動按鈕 ── */
+.line-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px 12px 14px;
+  border-radius: 999px;
+  background: #06c755;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 8px 22px rgba(6, 199, 85, 0.35), 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s ease, background 0.25s ease;
+}
 
+.line-fab:hover {
+  transform: translateY(-2px);
+  background: #05b64d;
+}
 
+.line-fab:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.line-fab svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.line-fab.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .line-fab {
+    right: 14px;
+    bottom: 14px;
+    padding: 11px 16px 11px 13px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .line-fab,
+  .line-fab:hover {
+    transition: none;
+    transform: none;
+  }
+}

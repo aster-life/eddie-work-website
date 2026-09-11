@@ -308,4 +308,58 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });
   }
+
+  // --- LINE 諮詢浮動按鈕 ---
+  // 官方帳號開好後，把下面這行換成帳號的基本 ID（@ 開頭）。
+  // 還是預設值時按鈕不會出現，避免線上出現連不到的連結。
+  const LINE_OA_ID = '@548mfdmm';
+
+  const linePageQuestions = {
+    'bathroom.html': '我想詢問浴室翻修',
+    'renovation.html': '我想詢問房屋翻修',
+    'masonry.html': '我想詢問泥作工程',
+    'building.html': '我想詢問建築修繕',
+    'flooring.html': '我想詢問地板工程'
+  };
+
+  if (/^@[A-Za-z0-9._-]+$/.test(LINE_OA_ID) && LINE_OA_ID !== '@REPLACE_WITH_OA_ID') {
+    const lastSegment = window.location.pathname.split('/').filter(Boolean).pop() || '';
+    const currentPage = lastSegment.endsWith('.html') ? lastSegment : 'index.html';
+    const question = linePageQuestions[currentPage] || '';
+    const encodedId = encodeURIComponent(LINE_OA_ID);
+    const lineHref = question
+      ? `https://line.me/R/oaMessage/${encodedId}/?${encodeURIComponent(question)}`
+      : `https://line.me/R/ti/p/${encodedId}`;
+
+    const lineFab = document.createElement('a');
+    lineFab.className = 'line-fab';
+    lineFab.href = lineHref;
+    lineFab.target = '_blank';
+    lineFab.rel = 'noopener';
+    lineFab.setAttribute('aria-label', '用 LINE 詢問');
+    lineFab.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+      '<path d="M12 3C6.5 3 2 6.6 2 11c0 2.5 1.4 4.7 3.6 6.2V21l3.3-1.8c1 .2 2 .4 3.1.4 5.5 0 10-3.6 10-8s-4.5-8-10-8z"/>' +
+      '</svg><span>LINE 諮詢</span>';
+    document.body.appendChild(lineFab);
+
+    lineFab.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'line_contact_click', {
+          event_category: 'Contact',
+          event_label: currentPage
+        });
+      }
+    });
+
+    // 客人已經在填表單時先收起來，避免蓋住送出鈕
+    const contactFormEl = document.querySelector('#contactForm');
+    if (contactFormEl && 'IntersectionObserver' in window) {
+      new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          lineFab.classList.toggle('is-hidden', entry.isIntersecting);
+        });
+      }, { threshold: 0.15 }).observe(contactFormEl);
+    }
+  }
 });
