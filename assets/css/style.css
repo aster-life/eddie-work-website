@@ -404,7 +404,7 @@ nav {
   margin-top: 8px;
 }
 
-/* ── 聯絡與表單區塊 (Contact & Form) ── */
+/* ── 聯絡區塊 (Contact) ── */
 .contact-section {
   background: var(--bg-light);
 }
@@ -458,221 +458,38 @@ nav {
   color: #fff;
 }
 
-.contact-form-panel {
+.contact-actions-panel {
   padding: 60px 40px;
 }
 
-.contact-form-panel h3 {
+.contact-actions-panel h3 {
   font-size: 1.6rem;
   color: var(--primary);
   margin-bottom: 12px;
 }
 
-.contact-form-panel p {
+.contact-actions-panel p {
   color: var(--text-muted);
   margin-bottom: 32px;
 }
 
-.form-group {
-  margin-bottom: 24px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  font-size: 0.95rem;
-  margin-bottom: 8px;
-  color: var(--text-main);
-}
-
-.form-control {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1px solid var(--surface-border);
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: var(--transition);
-  background: var(--bg-light);
-}
-
-.form-control:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-  background: var(--bg-white);
-}
-
-textarea.form-control {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.submit-btn {
-  width: 100%;
-  padding: 16px;
-  font-size: 1.1rem;
-}
-
-/* ── 諮詢送出回饋 ── */
-.submission-dialog {
-  width: min(560px, calc(100% - 32px));
-  max-width: none;
-  margin: auto;
-  padding: 0;
-  border: 0;
-  border-radius: 28px;
-  background: transparent;
-  color: var(--text-main);
-  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.28);
-  overflow: visible;
-}
-
-.submission-dialog::backdrop {
-  background: rgba(15, 23, 42, 0.68);
-  backdrop-filter: blur(6px);
-}
-
-.submission-dialog-card {
-  position: relative;
+.contact-actions {
   display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: 22px;
-  padding: 40px 40px 36px;
-  border: 1px solid rgba(30, 58, 138, 0.1);
-  border-radius: 28px;
-  background: var(--bg-white);
-  overflow: hidden;
+  gap: 16px;
 }
 
-.submission-dialog-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 8px;
-  background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent));
+.contact-actions .btn {
+  text-align: center;
 }
 
-.submission-dialog-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  margin-top: 2px;
-  border: 8px solid #fff7ed;
-  border-radius: 50%;
-  background: var(--accent);
+.btn-line {
+  background: #06c755;
   color: #fff;
-  font-size: 1.7rem;
-  font-weight: 900;
-  line-height: 1;
-  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.28);
 }
 
-.submission-dialog-content {
-  min-width: 0;
-}
-
-.submission-dialog-eyebrow {
-  margin-bottom: 4px;
-  color: var(--accent-hover);
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.submission-dialog-content h2 {
-  margin-bottom: 8px;
-  color: var(--primary);
-  font-size: 1.8rem;
-  line-height: 1.25;
-}
-
-.submission-dialog-lead {
-  color: var(--text-muted);
-  font-size: 0.98rem;
-  line-height: 1.75;
-  margin-bottom: 20px;
-}
-
-.submission-dialog-phone {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: var(--primary);
+.btn-line:hover {
+  background: #05b64d;
   color: #fff;
-  text-decoration: none;
-  box-shadow: 0 8px 18px rgba(30, 58, 138, 0.22);
-  transition: var(--transition);
-}
-
-.submission-dialog-phone:hover {
-  background: #172f73;
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(30, 58, 138, 0.28);
-}
-
-.submission-dialog-phone:focus-visible,
-.submission-dialog-close:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.35);
-  outline-offset: 3px;
-}
-
-.submission-dialog-phone-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
-  color: #fbbf24;
-  font-size: 1.1rem;
-}
-
-.submission-dialog-phone-copy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-
-.submission-dialog-phone-copy small {
-  color: #bfdbfe;
-  font-size: 0.75rem;
-  margin-bottom: 3px;
-}
-
-.submission-dialog-phone-copy strong {
-  font-size: 1.2rem;
-  letter-spacing: 0.04em;
-}
-
-.submission-dialog-phone-arrow {
-  margin-left: auto;
-  color: #fbbf24;
-  font-size: 1.4rem;
-}
-
-.submission-dialog-close {
-  width: 100%;
-  margin-top: 16px;
-  padding: 13px 16px;
-  border: 1px solid var(--surface-border);
-  border-radius: 14px;
-  background: var(--bg-white);
-  color: var(--primary);
-  font: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  transition: var(--transition);
-}
-
-.submission-dialog-close:hover {
-  border-color: var(--primary-light);
-  background: #eff6ff;
 }
 
 /* ── 頁尾 (Footer) ── */
@@ -726,7 +543,7 @@ footer .logo-bottom {
 
 @media (max-width: 600px) {
   .hero { padding-top: 100px; padding-bottom: 40px; }
-  .contact-info-panel, .contact-form-panel { padding: 40px 20px; }
+  .contact-info-panel, .contact-actions-panel { padding: 40px 20px; }
   .section { padding: 60px 5%; }
 }
 
@@ -1115,22 +932,6 @@ footer .logo-bottom {
   .compare-container { aspect-ratio: 1 / 1; }
   .carousel-track img { height: 420px; }
 
-  .submission-dialog-card {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 34px 24px 24px;
-  }
-
-  .submission-dialog-icon {
-    width: 56px;
-    height: 56px;
-    border-width: 6px;
-    font-size: 1.45rem;
-  }
-
-  .submission-dialog-content h2 {
-    font-size: 1.55rem;
-  }
 }
 
 /* ── 無障礙隱藏 (SEO 可見、視覺隱藏) ── */
@@ -1172,6 +973,12 @@ footer .logo-bottom {
   background: #05b64d;
 }
 
+.line-fab.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .line-fab:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 3px;
@@ -1183,12 +990,6 @@ footer .logo-bottom {
   flex-shrink: 0;
 }
 
-.line-fab.is-hidden {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px);
-  pointer-events: none;
-}
 
 @media (max-width: 480px) {
   .line-fab {

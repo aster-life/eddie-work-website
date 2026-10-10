@@ -1,3 +1,40 @@
+// 電話點擊追蹤：保留既有 GA4 與 Google Ads 事件及撥號備援。
+function gtag_report_conversion(url) {
+  var destination = typeof(url) !== 'undefined' ? url : '';
+  var didNavigate = false;
+
+  function navigate() {
+    if (didNavigate || !destination) {
+      return;
+    }
+
+    didNavigate = true;
+    window.location = destination;
+  }
+
+  var fallbackTimer = setTimeout(navigate, 300);
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'click_phone', {
+      'event_category': 'Contact',
+      'event_label': 'Phone Call'
+    });
+    gtag('event', 'conversion', {
+        'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
+        'value': 1.0,
+        'currency': 'TWD',
+        'event_callback': function () {
+          clearTimeout(fallbackTimer);
+          navigate();
+        }
+    });
+  } else {
+    navigate();
+  }
+
+  return false;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   const faders = document.querySelectorAll('.fade-up');
   const appearOptions = {
@@ -143,171 +180,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  const serviceConfig = {
-    bathroom: {
-      serviceValue: '水電工程',
-      titleText: '索取浴室翻修報價單'
-    },
-    renovation: {
-      serviceValue: '統包工程',
-      titleText: '老屋翻修免費丈量申請'
-    },
-    masonry: {
-      serviceValue: '泥作工程',
-      titleText: '泥作工程報價申請'
-    },
-    flooring: {
-      serviceValue: '地板工程',
-      titleText: '地板工程免費丈量申請'
-    },
-    building: {
-      serviceValue: '自地自建',
-      titleText: '自地自建諮詢申請'
-    }
-  };
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const serviceParam = urlParams.get('service');
-  const activeService = serviceParam ? serviceConfig[serviceParam] : null;
-  const formPanelTitle = document.querySelector('.contact-form-panel h3');
-  const serviceSelect = document.getElementById('serviceType');
-
-  function applyServiceSelection() {
-    if (!activeService || !formPanelTitle || !serviceSelect) return;
-
-    formPanelTitle.innerText = activeService.titleText;
-    Array.from(serviceSelect.options).forEach(option => {
-      option.selected = option.value === activeService.serviceValue;
+  // 所有電話入口共用同一條追蹤，避免新增按鈕時漏接。
+  document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      gtag_report_conversion(link.getAttribute('href'));
     });
-  }
-
-  applyServiceSelection();
-
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyQPgPIlQkk0r9BNcXdv_9uGmWtnw1nz_REKKUUriwK1Yb0Yt5AbzgH7N6o4dzpNq0F/exec';
-  const submissionDialog = document.querySelector('#submissionNotice');
-  const submissionDialogClose = submissionDialog?.querySelector('.submission-dialog-close');
-
-  function openSubmissionDialog() {
-    if (!submissionDialog || typeof submissionDialog.showModal !== 'function') return;
-    submissionDialog.showModal();
-  }
-
-  if (submissionDialog && submissionDialogClose) {
-    submissionDialogClose.addEventListener('click', () => submissionDialog.close());
-    submissionDialog.addEventListener('click', event => {
-      if (event.target === submissionDialog) submissionDialog.close();
-    });
-  }
-
-  const form = document.querySelector('#contactForm');
-  if (form) {
-    const submitBtn = form.querySelector('.submit-btn');
-    const defaultSubmitText = submitBtn ? submitBtn.innerText : '送出諮詢';
-
-    // 表單資料是接在網址後面送出的，Google 對整串網址有長度上限；
-    // 超過就會被擋下並變成送出失敗，這裡留安全餘裕先擋下來。
-    const maxRequestUrlLength = 9500;
-
-    const nameField = document.getElementById('name');
-    const phoneField = document.getElementById('phone');
-    const messageField = document.getElementById('message');
-    const requiredFields = [
-      { el: nameField, label: '姓名' },
-      { el: phoneField, label: '聯絡電話' }
-    ];
-
-    // 使用者重新輸入時清掉前一次的提示，否則原生驗證訊息會一直卡著
-    [nameField, phoneField, messageField].forEach(el => {
-      if (el) el.addEventListener('input', () => el.setCustomValidity(''));
-    });
-
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      if (!submitBtn) return;
-
-      // 只打空白的必填欄位會通過瀏覽器的 required 檢查，這裡補上實際內容檢查
-      let hasBlankRequired = false;
-      requiredFields.forEach(({ el, label }) => {
-        if (!el) return;
-        const isBlank = !el.value.trim();
-        el.setCustomValidity(isBlank ? `請填寫${label}` : '');
-        if (isBlank) hasBlankRequired = true;
-      });
-
-      if (hasBlankRequired) {
-        form.reportValidity();
-        return;
-      }
-
-      const params = new URLSearchParams();
-      const name = nameField.value.trim();
-      const phone = phoneField.value.trim();
-      const lineId = document.getElementById('lineId')?.value.trim() || '';
-      const serviceType = document.getElementById('serviceType').value;
-      const location = document.getElementById('location').value;
-      const message = messageField ? messageField.value.trim() : '';
-      const normalizedMessage = lineId
-        ? `${message}${message ? '\n\n' : ''}LINE ID：${lineId}`
-        : message;
-
-      params.append('name', name);
-      params.append('phone', phone);
-      params.append('lineId', lineId);
-      params.append('serviceType', serviceType);
-      params.append('location', location);
-      params.append('message', normalizedMessage);
-      params.append('sourceUrl', window.location.href);
-      params.append('userAgent', navigator.userAgent);
-
-      const requestUrl = `${scriptURL}?${params.toString()}`;
-
-      // 網址過長時 Google 會回一個不帶跨網域標頭的錯誤頁，
-      // 瀏覽器會直接判定連線失敗，所以在送出前先改成可讀的提示
-      if (requestUrl.length > maxRequestUrlLength && messageField) {
-        messageField.setCustomValidity('內容太長了，請精簡後再送出，或直接撥打 0900-019-725 跟我們說。');
-        form.reportValidity();
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.innerText = '送出中...';
-
-      try {
-        const response = await fetch(requestUrl, {
-          method: 'GET',
-          mode: 'cors',
-          cache: 'no-store',
-          headers: {
-            Accept: 'text/plain'
-          }
-        });
-
-        const responseText = (await response.text()).trim();
-        if (!response.ok || !/success/i.test(responseText)) {
-          throw new Error(responseText || `Unexpected response: ${response.status}`);
-        }
-
-        submitBtn.disabled = false;
-        submitBtn.innerText = defaultSubmitText;
-
-        if (typeof gtag === 'function') {
-          gtag('event', 'generate_lead', {
-            event_category: 'Contact',
-            event_label: 'Submit Form'
-          });
-        }
-
-        form.reset();
-        applyServiceSelection();
-        openSubmissionDialog();
-      } catch (error) {
-        submitBtn.disabled = false;
-        submitBtn.innerText = '再次送出';
-        console.error('Form submit error:', error);
-        alert('表單送出失敗，請稍後再試，或直接撥打 0900-019-725 聯繫我們。');
-      }
-    });
-  }
+  });
 
   // --- LINE 諮詢浮動按鈕 ---
   // 官方帳號開好後，把下面這行換成帳號的基本 ID（@ 開頭）。
@@ -333,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const lineFab = document.createElement('a');
     lineFab.className = 'line-fab';
+    lineFab.setAttribute('data-line-contact', '');
     lineFab.href = lineHref;
     lineFab.target = '_blank';
     lineFab.rel = 'noopener';
@@ -343,23 +223,26 @@ document.addEventListener("DOMContentLoaded", function() {
       '</svg><span>LINE 諮詢</span>';
     document.body.appendChild(lineFab);
 
-    lineFab.addEventListener('click', () => {
-      if (typeof gtag === 'function') {
-        gtag('event', 'line_contact_click', {
-          event_category: 'Contact',
-          event_label: currentPage
-        });
-      }
+    // 聯絡區已有 LINE 按鈕時收起浮動入口，避免遮擋手機版操作。
+    const contactActions = document.querySelector('.contact-actions');
+    if (contactActions) {
+      const contactObserver = new IntersectionObserver(entries => {
+        lineFab.classList.toggle('is-hidden', entries[0].isIntersecting);
+      });
+      contactObserver.observe(contactActions);
+    }
+
+    document.querySelectorAll('a[data-line-contact]').forEach(link => {
+      link.href = lineHref;
+      link.addEventListener('click', () => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'line_contact_click', {
+            event_category: 'Contact',
+            event_label: currentPage
+          });
+        }
+      });
     });
 
-    // 客人已經在填表單時先收起來，避免蓋住送出鈕
-    const contactFormEl = document.querySelector('#contactForm');
-    if (contactFormEl && 'IntersectionObserver' in window) {
-      new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          lineFab.classList.toggle('is-hidden', entry.isIntersecting);
-        });
-      }, { threshold: 0.15 }).observe(contactFormEl);
-    }
   }
 });

@@ -11,44 +11,6 @@
     gtag('config', 'G-RPTY6TW3ZX');
     gtag('config', 'AW-18055428591');
   </script>
-  <!-- 點選通話轉換追蹤函數 -->
-  <script>
-  function gtag_report_conversion(url) {
-    var destination = typeof(url) !== 'undefined' ? url : '';
-    var didNavigate = false;
-
-    function navigate() {
-      if (didNavigate || !destination) {
-        return;
-      }
-
-      didNavigate = true;
-      window.location = destination;
-    }
-
-    var fallbackTimer = setTimeout(navigate, 300);
-
-    if (typeof gtag === 'function') {
-      gtag('event', 'click_phone', {
-        'event_category': 'Contact',
-        'event_label': 'Phone Call'
-      });
-      gtag('event', 'conversion', {
-          'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
-          'value': 1.0,
-          'currency': 'TWD',
-          'event_callback': function () {
-            clearTimeout(fallbackTimer);
-            navigate();
-          }
-      });
-    } else {
-      navigate();
-    }
-
-    return false;
-  }
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>豈樂土木房屋建築修繕工程行｜台南統包工程、水電、泥作、翻修推薦</title>
@@ -75,7 +37,7 @@
       <li><a href="#about">關於我們</a></li>
       <li><a href="#services">服務項目</a></li>
       <li><a href="#reviews">真實評價</a></li>
-      <li><a href="#contact">聯絡表單</a></li>
+      <li><a href="#contact">聯絡我們</a></li>
     </ul>
   </nav>
 
@@ -88,8 +50,8 @@
         專業 · 誠信 · 服務，台南最可靠的工程統包團隊
       </p>
       <div class="hero-actions fade-up" style="transition-delay: 0.3s;">
-        <a href="tel:0900019725" class="btn btn-primary" onclick="return gtag_report_conversion('tel:0900019725');">📞 立即免費諮詢：0900-019-725</a>
-        <a href="#contact" class="btn btn-secondary">📋 線上表單詢問</a>
+        <a href="tel:0900019725" class="btn btn-primary">📞 立即免費諮詢：0900-019-725</a>
+        <a href="https://line.me/R/ti/p/%40548mfdmm" class="btn btn-secondary" data-line-contact target="_blank" rel="noopener">LINE 諮詢</a>
       </div>
     </div>
   </header>
@@ -248,13 +210,13 @@
     </div>
   </section>
 
-  <!-- 聯絡與表單 -->
+  <!-- 電話與 LINE 聯絡 -->
   <section id="contact" class="section contact-section">
     <div class="container">
       <div class="section-header fade-up">
         <span class="tag">CONTACT US</span>
         <h2>免費諮詢與丈量</h2>
-        <p style="color: var(--text-muted);">有老屋翻修、浴室全面翻修或統包需求嗎？歡迎來電、透過 LINE 或填寫下方表單，告訴我們房屋現況與預計翻修範圍。</p>
+        <p style="color: var(--text-muted);">有老屋翻修、浴室全面翻修或統包需求嗎？歡迎來電或透過 LINE，告訴我們房屋現況與預計翻修範圍。</p>
       </div>
       
       <div class="contact-wrapper fade-up">
@@ -274,7 +236,7 @@
             <div class="icon">📞</div>
             <div class="contact-item-text">
               <span>聯絡電話 (點擊直撥)</span>
-              <strong><a href="tel:0900019725" style="color:#fff; text-decoration:none;" onclick="return gtag_report_conversion('tel:0900019725');">0900-019-725</a></strong>
+              <strong><a href="tel:0900019725" style="color:#fff; text-decoration:none;">0900-019-725</a></strong>
             </div>
           </div>
           
@@ -295,121 +257,18 @@
           </div>
         </div>
         
-        <!-- 右側內嵌表單 -->
-        <div class="contact-form-panel">
-          <h3>線上諮詢表單</h3>
-          <p>填寫您的需求，我們會盡快與您聯繫，並安排現場勘查。</p>
-          
-          <form id="contactForm">
-            <div class="form-group">
-              <label for="name">您的姓名 (必填)</label>
-              <input type="text" id="name" class="form-control" placeholder="請輸入姓名" maxlength="30" required>
-            </div>
-            
-            <div class="form-group">
-              <label for="phone">聯絡電話 (必填)</label>
-              <input type="tel" id="phone" class="form-control" placeholder="請輸入手機或市話" maxlength="30" required>
-            </div>
-
-            <div class="form-group">
-              <label for="lineId">LINE ID</label>
-              <input type="text" id="lineId" class="form-control" placeholder="方便聯繫的 LINE ID（選填）" maxlength="50">
-            </div>
-            
-            <div class="form-group">
-              <label for="serviceType">需要諮詢的工程項目</label>
-              <select id="serviceType" class="form-control">
-                <option value="">請選擇工程分類...</option>
-                <option value="統包工程">統包工程 (新建/翻修)</option>
-                <option value="水電工程">水電工程 (管線/衛浴)</option>
-                <option value="泥作工程">泥作工程 (磁磚/打壁)</option>
-                <option value="油漆工程">油漆粉刷（翻修配套）</option>
-                <option value="木工裝潢">木工裝潢</option>
-                <option value="地板工程">地板工程</option>
-                <option value="自地自建">自地自建</option>
-                <option value="鋼筋板模">鋼筋板模鷹架</option>
-                <option value="拆除工程">拆除工程</option>
-                <option value="其他">其他 / 不確定</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label for="location">施工的地點（台南市）</label>
-              <select id="location" name="location" class="form-control">
-                <option value="">請選擇台南市行政區...</option>
-                <option value="中西區">中西區</option>
-                <option value="東區">東區</option>
-                <option value="南區">南區</option>
-                <option value="北區">北區</option>
-                <option value="安平區">安平區</option>
-                <option value="安南區">安南區</option>
-                <option value="永康區">永康區</option>
-                <option value="仁德區">仁德區</option>
-                <option value="歸仁區">歸仁區</option>
-                <option value="關廟區">關廟區</option>
-                <option value="龍崎區">龍崎區</option>
-                <option value="新化區">新化區</option>
-                <option value="新市區">新市區</option>
-                <option value="安定區">安定區</option>
-                <option value="善化區">善化區</option>
-                <option value="大內區">大內區</option>
-                <option value="山上區">山上區</option>
-                <option value="玉井區">玉井區</option>
-                <option value="楠西區">楠西區</option>
-                <option value="南化區">南化區</option>
-                <option value="左鎮區">左鎮區</option>
-                <option value="麻豆區">麻豆區</option>
-                <option value="佳里區">佳里區</option>
-                <option value="西港區">西港區</option>
-                <option value="七股區">七股區</option>
-                <option value="將軍區">將軍區</option>
-                <option value="學甲區">學甲區</option>
-                <option value="北門區">北門區</option>
-                <option value="官田區">官田區</option>
-                <option value="六甲區">六甲區</option>
-                <option value="下營區">下營區</option>
-                <option value="柳營區">柳營區</option>
-                <option value="鹽水區">鹽水區</option>
-                <option value="新營區">新營區</option>
-                <option value="後壁區">後壁區</option>
-                <option value="白河區">白河區</option>
-                <option value="東山區">東山區</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="message">需求與問題描述</label>
-              <textarea id="message" class="form-control" placeholder="請說明房屋現況、預計翻修範圍與希望施工時間..." maxlength="800"></textarea>
-            </div>
-            
-            <button type="submit" class="btn btn-primary submit-btn">送出諮詢</button>
-          </form>
+        <!-- 電話與 LINE 諮詢 -->
+        <div class="contact-actions-panel">
+          <h3>電話或 LINE 諮詢</h3>
+          <p>提供台南施工地點、房屋現況與預計翻修範圍，方便我們了解您的需求。</p>
+          <div class="contact-actions">
+            <a href="tel:0900019725" class="btn btn-primary">電話諮詢：0900-019-725</a>
+            <a href="https://line.me/R/ti/p/%40548mfdmm" class="btn btn-line" data-line-contact target="_blank" rel="noopener">LINE 諮詢</a>
+          </div>
         </div>
       </div>
     </div>
   </section>
-
-  <dialog id="submissionNotice" class="submission-dialog" aria-labelledby="submissionNoticeTitle" aria-describedby="submissionNoticeLead">
-    <div class="submission-dialog-card">
-      <div class="submission-dialog-icon" aria-hidden="true">✓</div>
-      <div class="submission-dialog-content">
-        <p class="submission-dialog-eyebrow">諮詢已送出</p>
-        <h2 id="submissionNoticeTitle">謝謝您的詢問</h2>
-        <p id="submissionNoticeLead" class="submission-dialog-lead">我們已收到您的需求，會盡快回覆您。</p>
-
-        <a class="submission-dialog-phone" href="tel:0900019725">
-          <span class="submission-dialog-phone-icon" aria-hidden="true">☎</span>
-          <span class="submission-dialog-phone-copy">
-            <small>緊急需求請來電</small>
-            <strong>0900-019-725</strong>
-          </span>
-          <span class="submission-dialog-phone-arrow" aria-hidden="true">↗</span>
-        </a>
-
-        <button type="button" class="submission-dialog-close" autofocus>知道了，謝謝</button>
-      </div>
-    </div>
-  </dialog>
 
   <!-- 頁尾 -->
   <footer>

@@ -10,44 +10,6 @@
     gtag('config', 'G-RPTY6TW3ZX');
     gtag('config', 'AW-18055428591');
   </script>
-  <!-- 點選通話轉換追蹤函數 -->
-  <script>
-  function gtag_report_conversion(url) {
-    var destination = typeof(url) !== 'undefined' ? url : '';
-    var didNavigate = false;
-
-    function navigate() {
-      if (didNavigate || !destination) {
-        return;
-      }
-
-      didNavigate = true;
-      window.location = destination;
-    }
-
-    var fallbackTimer = setTimeout(navigate, 300);
-
-    if (typeof gtag === 'function') {
-      gtag('event', 'click_phone', {
-        'event_category': 'Contact',
-        'event_label': 'Phone Call'
-      });
-      gtag('event', 'conversion', {
-          'send_to': 'AW-18055428591/sD1tCIH-5K4cEO_zv6FD',
-          'value': 1.0,
-          'currency': 'TWD',
-          'event_callback': function () {
-            clearTimeout(fallbackTimer);
-            navigate();
-          }
-      });
-    } else {
-      navigate();
-    }
-
-    return false;
-  }
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>台南老屋翻新費用｜台南舊屋翻新｜老屋改建推薦｜豈樂工程行</title>
@@ -79,7 +41,7 @@
     <ul class="nav-links" id="site-nav-links">
       <li><a href="index.html#about">關於我們</a></li>
       <li><a href="index.html#services">服務項目</a></li>
-      <li><a href="index.html#contact">聯絡表單</a></li>
+      <li><a href="index.html#contact">聯絡我們</a></li>
     </ul>
   </nav>
 
@@ -92,8 +54,8 @@
         從房屋現況評估到水電、泥作與空間翻新，以統包方式安排老屋整體改造。
       </p>
       <div class="hero-actions fade-up">
-        <a href="index.html?service=renovation#contact" class="btn btn-primary">今日預約免費估價</a>
-        <a href="tel:0900019725" class="btn btn-secondary" onclick="return gtag_report_conversion('tel:0900019725');">📞 今日諮詢</a>
+        <a href="https://line.me/R/ti/p/%40548mfdmm" class="btn btn-primary" data-line-contact target="_blank" rel="noopener">LINE 諮詢</a>
+        <a href="tel:0900019725" class="btn btn-secondary">📞 今日諮詢</a>
       </div>
     </div>
   </header>
