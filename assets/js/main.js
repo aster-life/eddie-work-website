@@ -1,5 +1,6 @@
 // 電話點擊追蹤：保留既有 GA4 與 Google Ads 事件及撥號備援。
-function gtag_report_conversion(url) {
+function gtag_report_conversion(url, link) {
+  if (window.QileContact) return window.QileContact.phone(url, link);
   var destination = typeof(url) !== 'undefined' ? url : '';
   var didNavigate = false;
 
@@ -181,7 +182,8 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // 所有電話入口共用同一條追蹤，避免新增按鈕時漏接。
-  document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+  if (!window.QileContact) document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+    if (link.hasAttribute('onclick')) return;
     link.addEventListener('click', event => {
       event.preventDefault();
       gtag_report_conversion(link.getAttribute('href'));
@@ -224,15 +226,15 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.appendChild(lineFab);
 
     // 聯絡區已有 LINE 按鈕時收起浮動入口，避免遮擋手機版操作。
-    const contactActions = document.querySelector('.contact-actions');
-    if (contactActions) {
-      const contactObserver = new IntersectionObserver(entries => {
-        lineFab.classList.toggle('is-hidden', entries[0].isIntersecting);
-      });
-      contactObserver.observe(contactActions);
-    }
+    const contactActions = document.querySelectorAll('.contact-actions');
+    const visibleContacts = new Set();
+    const contactObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) visibleContacts.add(entry.target); else visibleContacts.delete(entry.target); });
+      lineFab.classList.toggle('is-hidden', visibleContacts.size > 0);
+    });
+    contactActions.forEach(element => contactObserver.observe(element));
 
-    document.querySelectorAll('a[data-line-contact]').forEach(link => {
+    if (!window.QileContact) document.querySelectorAll('a[data-line-contact]').forEach(link => {
       link.href = lineHref;
       link.addEventListener('click', () => {
         if (typeof gtag === 'function') {
@@ -245,4 +247,5 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
   }
+  if (window.QileContact) window.QileContact.init();
 });
