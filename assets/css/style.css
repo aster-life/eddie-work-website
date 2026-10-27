@@ -1007,3 +1007,76 @@ footer .logo-bottom {
     transform: none;
   }
 }
+
+
+/* 建屋頁：沿用既有色彩與導覽，新增樣式只套用此頁。 */
+.building-page { background:#fff; }
+.building-page .container { width:calc(100% - 40px); }
+.building-page [id] { scroll-margin-top:100px; }
+.building-page .building-section { padding:76px 0; }
+.building-page .building-narrow { max-width:900px; }
+.building-page .building-hero { padding:135px 0 64px; background:var(--bg-light); }
+.building-page .building-hero-grid { display:grid; grid-template-columns:1.12fr .88fr; gap:48px; align-items:center; }
+.building-page .building-eyebrow { color:var(--primary); font-weight:700; font-size:.9rem; letter-spacing:.05em; margin-bottom:18px; }
+.building-page h1 { color:var(--primary); font-size:clamp(2rem,3.4vw,3.25rem); line-height:1.32; margin-bottom:24px; letter-spacing:-.02em; }
+.building-page h2 { color:var(--primary); font-size:clamp(1.65rem,2.5vw,2.25rem); line-height:1.4; margin-bottom:25px; }
+.building-page h3 { font-size:1.15rem; line-height:1.6; margin-bottom:14px; color:var(--primary); }
+.building-page p { margin-bottom:18px; line-height:1.85; }
+.building-page .building-illustration { position:relative; margin:0; }
+.building-page .building-illustration img { display:block; width:100%; height:auto; aspect-ratio:4/5; object-fit:cover; border-radius:20px; box-shadow:var(--shadow-md); }
+.building-page .building-illustration figcaption { margin-top:10px; color:var(--text-muted); font-size:.85rem; }
+.building-page .building-actions { display:flex; flex-wrap:wrap; gap:12px; margin:26px 0 16px; }
+.building-page .building-actions .btn { text-align:center; min-height:48px; }
+.building-page .building-actions .btn-primary { color:#172554; }
+.building-page .building-actions .btn-secondary { color:var(--primary); border-color:var(--primary); background:white; }
+.building-page .building-text-link { color:var(--primary); font-weight:700; text-underline-offset:5px; }
+.building-page .building-message { border-left:3px solid var(--surface-border); padding:6px 0 6px 14px; font-size:.85rem; color:#475569; white-space:pre-wrap; user-select:text; }
+.building-page .building-new-house { border-top:1px solid var(--surface-border); border-bottom:1px solid var(--surface-border); }
+.building-page .building-preparation { margin-top:30px; padding:26px 30px 10px; background:var(--bg-light); border-radius:16px; }
+.building-page .building-list { padding-left:24px; margin:20px 0; }
+.building-page .building-list li { padding:5px 0; }
+.building-page .building-card-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:30px; }
+.building-page .building-card { border:1px solid var(--surface-border); border-radius:16px; padding:30px 26px 16px; background:white; }
+.building-page .building-card:first-child { border-top:4px solid var(--accent); }
+.building-page .building-tint { background:var(--bg-light); }
+.building-page .building-table-wrap { overflow:auto; margin:28px 0; border:1px solid var(--surface-border); border-radius:12px; }
+.building-page table { border-collapse:collapse; width:100%; text-align:left; }
+.building-page th { background:var(--bg-light); color:var(--primary); }
+.building-page th,.building-page td { padding:18px 20px; border-bottom:1px solid var(--surface-border); vertical-align:top; }
+.building-page th:first-child,.building-page td:first-child { width:34%; }
+.building-page tr:last-child td { border-bottom:0; }
+.building-page .building-steps { padding-left:25px; }
+.building-page .building-steps li { padding:8px 0 16px 6px; line-height:1.9; }
+.building-page .building-faq details { padding:22px 0; border-bottom:1px solid var(--surface-border); }
+.building-page .building-faq summary { cursor:pointer; font-weight:700; color:var(--primary); font-size:1.05rem; }
+.building-page .building-faq p { margin:18px 0 0; }
+.building-page .building-contact { background:#eef3fc; }
+.building-page .building-template { margin-top:32px; padding:28px; background:#fff; border:1px solid var(--surface-border); border-radius:16px; }
+.building-page .building-template pre { white-space:pre-wrap; font:inherit; line-height:1.8; user-select:text; overflow-wrap:anywhere; }
+.building-page footer p { margin:12px auto; max-width:850px; }
+.building-page footer a { color:#e2e8f0; text-underline-offset:4px; }
+.building-page .building-legal { font-size:.85rem; color:#94a3b8; }
+.building-page :focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+.building-page.qile-preview { padding-bottom:76px; }
+.building-page #contact-preview { position:fixed; z-index:2000; bottom:0; left:0; right:0; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; padding:10px 20px; background:#172554; color:white; font-size:.82rem; }
+.building-page.qile-preview .line-fab { bottom:88px; }
+@media (max-width:900px) {
+  .building-page .building-hero-grid { grid-template-columns:1fr; gap:30px; }
+  .building-page .building-hero { padding-top:110px; }
+  .building-page .building-illustration img { max-height:440px; aspect-ratio:16/10; object-position:center 64%; }
+  .building-page .building-card-grid { grid-template-columns:1fr; }
+}
+@media (max-width:600px) {
+  .building-page .building-section { padding:48px 0; }
+  .building-page .building-hero { padding-bottom:40px; }
+  .building-page .building-actions { flex-direction:column; }
+  .building-page .building-actions .btn { width:100%; padding:14px 18px; }
+  .building-page .building-preparation,.building-page .building-template { padding:22px 18px; }
+  .building-page th,.building-page td { padding:14px 12px; }
+  .building-page #contact-preview { gap:0; }
+  .building-page #contact-preview span { width:100%; text-align:center; }
+  .building-page footer { padding-left:6%; padding-right:6%; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .building-page * { scroll-behavior:auto !important; }
+}

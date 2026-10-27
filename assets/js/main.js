@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", function() {
     'bathroom.html': '我想詢問浴室翻修',
     'renovation.html': '我想詢問房屋翻修',
     'masonry.html': '我想詢問泥作工程',
-    'building.html': '我想詢問建築修繕',
+    'building.html': '我想詢問建屋。地區：＿＿；目前進度：＿＿。',
     'flooring.html': '我想詢問地板工程'
   };
 
@@ -215,6 +215,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const lineFab = document.createElement('a');
     lineFab.className = 'line-fab';
     lineFab.setAttribute('data-line-contact', '');
+    if (currentPage === 'building.html') {
+      lineFab.dataset.serviceInterest = 'homebuilding';
+      lineFab.dataset.ctaLocation = 'floating';
+    }
     lineFab.href = lineHref;
     lineFab.target = '_blank';
     lineFab.rel = 'noopener';
