@@ -1080,3 +1080,21 @@ footer .logo-bottom {
 @media (prefers-reduced-motion:reduce) {
   .building-page * { scroll-behavior:auto !important; }
 }
+
+/* 核准品牌標誌：保留原導覽行為，僅設定頁首顯示尺寸。 */
+#navbar .logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.brand-logo-header {
+  display: block;
+  width: 236px;
+  height: auto;
+  max-width: 100%;
+}
+
+@media (max-width: 600px) {
+  .brand-logo-header { width: 190px; }
+}
