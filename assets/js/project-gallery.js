@@ -15,6 +15,10 @@ const projectCases = [
   { slug: 'yongkang-floor-damp', name: '永康地坪及壁癌工程', description: '地坪與壁癌修繕工程', before: 7, after: 6, thumbnail: { before: 4, after: 4 } }
 ];
 
+const excludedProjectPhotos = new Set([
+  'assets/project-gallery/east-district-elevator/before/05.jpg'
+]);
+
 function projectImagePath(project, stage, number) {
   return `assets/project-gallery/${project.slug}/${stage}/${String(number).padStart(2, '0')}.jpg`;
 }
@@ -23,9 +27,9 @@ function projectImages(project, stage) {
   return Array.from({ length: project[stage] }, (_, index) => ({
     src: projectImagePath(project, stage, index + 1),
     stage,
-    stageLabel: stage === 'before' ? '施工前' : '施工後',
+    stageLabel: stage === 'before' ? '原況／施工過程' : '施作進度／成果',
     number: index + 1
-  }));
+  })).filter(image => !excludedProjectPhotos.has(image.src));
 }
 
 function renderProjectCard(project, index) {
@@ -45,17 +49,17 @@ function renderProjectCard(project, index) {
     <article class="portfolio-item fade-up" style="transition-delay: ${delay}s;">
       <div class="compare-wrapper">
         <div class="compare-container" data-compare>
-          <img class="img-before" src="${afterImage}" alt="${project.name} 施工後">
+          <img class="img-before" src="${afterImage}" alt="${project.name} 施作進度／成果">
           <div class="img-after-wrap">
-            <img src="${beforeImage}" alt="${project.name} 施工前">
+            <img src="${beforeImage}" alt="${project.name} 原況／施工過程">
           </div>
-          <div class="compare-divider" role="slider" tabindex="0" aria-label="${project.name} 施工前後比較" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="compare-divider" role="slider" tabindex="0" aria-label="${project.name} 工程紀錄照片比較" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
             <div class="compare-handle" aria-hidden="true">⇔</div>
           </div>
         </div>
         <div class="compare-labels">
-          <span class="label-before">施工前</span>
-          <span class="label-after">施工後</span>
+          <span class="label-before">原況／施工過程</span>
+          <span class="label-after">施作進度／成果</span>
         </div>
       </div>
       <div class="portfolio-info">
@@ -66,7 +70,7 @@ function renderProjectCard(project, index) {
         <summary class="case-gallery-summary">
           <span class="case-gallery-copy">
             <span class="case-gallery-title">完整工程相簿</span>
-            <span class="case-gallery-subtitle">查看施工前後紀錄</span>
+            <span class="case-gallery-subtitle">查看各階段工程照片</span>
           </span>
           <span class="case-gallery-meta">
             <span class="case-photo-count">${allImages.length} 張照片</span>
